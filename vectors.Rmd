@@ -1,12 +1,12 @@
-### Vectores
+# Vectores
 
-Introducción
+## Introducción
 
 Hasta ahora este libro se ha enfocado en tibbles y sus paquetes correspondientes. Pero como empezaste a escribir tus propias funciones, y a profundizar en R, es que necesitas aprender sobre vectores, es decir, sobre los objetos que soportan los tibbles. Por esto, es mejor empezar con tibbles ya que inmediatamente puedes ver su utilidad, y luego trabajar a tu manera con los componentes que están debajo, los vectores.
 Los vectores son particularmente importantes, al igual que la mayoría de las funciones que escribirás y utilizarás con dichos vectores. Es posible desarrollar funciones que trabajen con tibbles (como ggplot2, dplyr and tidyr) pero las herramientas que necesitas para ello son peculiares e inmaduras. Por esto, estoy desarrollando un mejor enfoque, el cual puedes consultar en https://github.com/hadley/lazyeval, pero este no estará listo a tiempo para la publicación del libro. Incluso aún cuando esté completo, de todas maneras necesitarás entender el concepto de vectores, esto solo facilitará la escritura de capas finales que sean user-friendly (amigables al usuario).
 
 
-### Pre-requisitos
+## Pre-requisitos
 
 Este capítulo se enfoca en las estructuras de datos de R base, por lo que no es esencial cargar ningún paquete. Sin embargo, usaremos un conjunto de funciones del paquete purrr para evitar algunas insonsistencias en R Base.
 
@@ -157,8 +157,8 @@ Anteriormente vimos el tipo más importante de coerción implicita: usando un ve
 ```{r}
 x <- sample(20, 100, replace = TRUE)
 y <- x > 10
-sum(y)  #¿cuántos valores son más grandes que 10?
-mean(y) ) #? ¿cuál es la porporción de valores que son mayores que 10?
+sum(y)  # ¿cuántos valores son más grandes que 10?
+mean(y) # ¿cuál es la porporción de valores que son mayores que 10?
 ```
 
 Quizás veas algún código (tipicamente más antiguo) basado en la coerción implicita pero en la dirección opuesta, es decir, de un valor entero a uno lógico
@@ -198,13 +198,13 @@ Algunas veces quieres hacer las cosas de una manera diferente basadas en el tipo
 
 Cada predicado además viene con una version para "escalares", donde la función `is_scalar_atomic()`, chequea que la longitud sea 1. Esto es útil, por ejemplo, si quieres chequear en algún argumento que tu función sea un solo valor lógico.
 
-###Escalares y reglas de reciclado 
+### Escalares y reglas de reciclado 
 
 Así como implicitamente se coercionan los tipos de vectores que son compatibles, R también implicitamente coerciona la longitud de los vectores. Esto se denomina vector __recycling__, o reciclado de vectores, debido a que el vector de menor longitud se repite, o recicla, hasta igualar la longitud del vector de mayor longitud.
 Esto es generalmente lo más útil cuando estás trabajando con vectores y "escalares". Los escalares están puestos en notas porque R en realidad no tiene definido los escalares: en su lugar, un solo número conforma un vector de longitud 1. Debido a que no existen los escalares, la mayoría de las funciones están construidas como vectorizadas, esto significa que operan sobre un vector del tipo númerico. Esto es así porque, por ejemplo, este código funciona:
 
 ```{r}
-sample(10) + 100 (del inglés muestreo)
+sample(10) + 100 # (del inglés muestreo)
 runif(10) > 0.5
 ```
 En R, las operaciones matemáticas básicas funcionan con vectores. Lo que significa que no necesitarás la ejecución de una interación explicita cuando realices  cálculos matemáticos sencillos.
@@ -251,9 +251,7 @@ Hasta ahora hemos usado `dplyr::filter()` para filtrar filas en una TIBBLE. La s
     La Subdivisión con enteros positivos mantiene los elementos en aquellas posiciones:
 
     ```{r}
-    
-    ```{r}
-    x <- c"uno", "dos", "tres", "cuatro", "cinco")
+    x <- c("uno", "dos", "tres", "cuatro", "cinco")
     x[c(3, 2, 5)]
     x[c(3, 2, 5)]
     ```
@@ -336,17 +334,20 @@ str(x)
 
 x_nombrada <- list(a = 1, b = 2, c = 3)
 str(x_nombrada)
+```
 
 A diferencia de los vectores atómicos, el objeto ´list()´ puede contener una variedad de diferentes objetos:
-
 ```{r}
 y <- list("a", 1L, 1.5, TRUE)
 str(y)
 ```
+
 ¡Incluso las listas pueden contener otras listas!
 ```{r}
 z <- list(list(1, 2), list(3, 4))
 str(z)
+```
+
 ## Visualizando listas
 Para explicar funciones de manipulacion de listas más complicadas, es útil tener una representacion visual de las mismas. Por ejemplo, defino estas tres listas:
 ```{r}
@@ -354,10 +355,12 @@ x1 <- list(c(1, 2), c(3, 4))
 x2 <- list(list(1, 2), list(3, 4))
 x3 <- list(1, list(2, list(3)))
 ```
+
 Y a continuación, las grafico:
 ```{r, echo = FALSE, out.width = "75%"}
 knitr::include_graphics("diagrams/lists-structure.png")
 ```
+
 Existen tres principios, al momento de observer el gráfico anterior:
 1.	Las listas tienen esquinas redondeadas, en cambio, los vectores atómicos tienen esquinas cuadradas.
 2.	Los hijos son representados dentro de sus listas padres, y tienen un fondo ligeramente más oscuro para facilitar la visualización de la jerarquía.
@@ -396,19 +399,18 @@ knitr::include_graphics("diagrams/lists-subsetting.png")
 
 ## Listas de Condimentos
 La diferencia entre ambos `[` y `[[` es muy importante, pero es muy fácil confundirlos. Para ayudarte a recordar, permiteme mostrarte un pimientero inusual
-
-
 ```{r, echo = FALSE, out.width = "25%"} 
 knitr::include_graphics("images/pepper.jpg")
 ```
-Si este pimientero es tu lista `x`, entonces, `x[1] es un pimientero que contiene un simple paquete de pimienta:
 
+Si este pimientero es tu lista `x`, entonces, `x[1] es un pimientero que contiene un simple paquete de pimienta:
 ```{r, echo = FALSE, out.width = "25%"} 
 knitr::include_graphics("images/pepper-1.jpg")
 ``` 
-La expresión `x[2]` luciría del mismo modo, pero podría contener el segundo paquete. La expresión `x[1:2]` sería un pimientero que contiente dos paquetes de pimienta.
-La expresión `x[[1]]` es:
 
+La expresión `x[2]` luciría del mismo modo, pero podría contener el segundo paquete. La expresión `x[1:2]` sería un pimientero que contiente dos paquetes de pimienta.
+
+La expresión `x[[1]]` es:
 ```{r, echo = FALSE, out.width = "25%"} 
 knitr::include_graphics("images/pepper-2.jpg")
 ```
@@ -417,6 +419,7 @@ Si quisieras obtener el contenido del paquete de pimiento, necesitarías utiliza
 ```{r, echo = FALSE, out.width = "25%"} 
 knitr::include_graphics("images/pepper-3.jpg")
 ```
+
 ### Ejercicios
 1.Dibuja las listas siguientes como sets anidados:
 
@@ -530,4 +533,3 @@ Ejecicios:
 1.	¿Qué valor retorna la siguiente expresión hms::hms(3600)? ¿Cómo se muestra? ¿Cuál es la tipo primario sobre el cual se basa el vector aumentado? ¿Qué atributos utiliza el mismo?
 2.	Intenta y crea un tibble que tenga columnas con diferentes longitudes ¿Qué es lo que ocurre?
 3.	Teniendo en cuenta 
-
